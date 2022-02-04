@@ -1,0 +1,15 @@
+module IND(p,n);
+inout p,n;
+electrical p,n;
+
+real L;
+
+analog begin
+
+    L = (50m + 30m * min(1, max(0, $abstime-5)/(30-5)));
+
+    v(p,n) <+ 2*L*ddt(i(p,n),,0);
+
+end 
+
+endmodule

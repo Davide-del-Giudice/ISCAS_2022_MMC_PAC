@@ -1,0 +1,16 @@
+module COMP(d1,q1,d2,q2);
+inout d1,q1,d2,q2;
+
+electrical d1,q1,d2,q2;
+
+parameter real OMEGA = 2*pi*60;
+parameter real C     = 2*2.3062e-04;
+
+analog begin
+
+    i(d1,d2) <+ -OMEGA * C * v(q1,q2) + C * ddt(v(d1,d2));
+    i(q1,q2) <+  OMEGA * C * v(d1,d2) + C * ddt(v(q1,q2));
+
+end
+
+endmodule

@@ -1,0 +1,52 @@
+module AC_SW(pos,neg,trgp,trgn);
+inout pos,neg;
+input trgp,trgn;
+
+electrical pos, neg;
+electrical trgp, trgn;
+
+parameter real RON    = 1m;
+parameter real ROFF   = 1G;
+parameter real TCROSS = 1u;
+
+parameter real VDIG = 1;
+
+real R, Current;
+integer Status;
+
+analog begin
+
+    @(initial_model) 
+        if( analysis("restart") ) begin
+	    Status = 0;
+	end
+
+    Current = i(pos,neg);
+
+    if( v(trgp,trgn) > 0.5 * VDIG ) begin
+        Status = 1;
+	R      = RON;
+    end
+    else if( Status == 3 && abs( Current ) < 1 ) begin
+	Status = 4;
+	R      = ROFF;
+    end
+    else if( Status == 4 ) begin
+	R = ROFF;
+    end
+    else begin
+        Status = 2;
+	R      = RON;
+    end
+
+    if( Status == 2 || Status == 3 )
+        @(cross( Current, 0, TCROSS )) begin
+	    Status = 3;
+	    $display( "Cross - I = %e\n", Current );
+	end
+
+    v(pos,neg) <+ R * Current;
+
+end
+
+endmodule
