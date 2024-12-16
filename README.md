@@ -21,3 +21,9 @@ If run, each **.pan** file generates one or more .mat file, which can be used to
 -	The **"DcInf_-800MW.pan"** file allows obtaining the **.mat** files necessary to plot the red lines in the upper and lower panel of **Fig.2** and **Fig.4**. In this case, power is injected into the AC grid.
 -	The **"dcInstability.pan"** file allows obtaining the **.mat** files necessary to plot **Fig.3**. Compared to **Fig.1(a)**, in this case a time-varying inductor (implemented in **ind.va**) was connected at each pole of MMC1 (i.e., bus Dc1).
 -	The **"acInstability.pan"** file allows obtaining the **.mat** files necessary to plot Fig.5. Compared to **Fig.1(a)**, in this case a weak AC grid was added.
+
+The **"distlibs.tar"** folder includes the libraries needed to generate the simulator executable (updated to the latest version of 16/12/2024). Expand the .tar file and issue these two commands:
+1) chmod 700 do_link
+2) ./do_link
+
+So doing, in the same directory, the PAN executable should be generated. 
